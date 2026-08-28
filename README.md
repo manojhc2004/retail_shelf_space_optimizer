@@ -302,19 +302,16 @@ The optimization pipeline consists of the following stages.
 
 ## Dashboard
 
-> Add dashboard screenshot here.
 ![Home Page](images/home_page1.png)
 ---
 
 ## Product Association Network
 
-> Add interactive network screenshot here.
 ![Interactive Network](images/home_page3.png)
 ---
 
 ## System Workflow
 
-> Add End-to-End System Workflow image here.
 ![System Workflow](images/end_to_end_system_work_flowsystem_workflow.png)
 ---
 
