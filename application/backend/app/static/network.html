@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 700px;
+                 background-color: white;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "Juice", "label": "Juice", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Shirt", "label": "Shirt", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Jeans", "label": "Jeans", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Dress", "label": "Dress", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Croissant", "label": "Croissant", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Educational Book", "label": "Educational Book", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Fiction Book", "label": "Fiction Book", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Vitamins", "label": "Vitamins", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Face Wash", "label": "Face Wash", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Cake", "label": "Cake", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Dishwashing Liquid", "label": "Dishwashing Liquid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Earphones", "label": "Earphones", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Detergent", "label": "Detergent", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Electric Kettle", "label": "Electric Kettle", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Baby Food", "label": "Baby Food", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Charger", "label": "Charger", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Coffee", "label": "Coffee", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Soda", "label": "Soda", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Toilet Paper", "label": "Toilet Paper", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Tissue", "label": "Tissue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Butter", "label": "Butter", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Milk", "label": "Milk", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Orange", "label": "Orange", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Rice", "label": "Rice", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Sugar", "label": "Sugar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Onion", "label": "Onion", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Energy Drink", "label": "Energy Drink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Tomato", "label": "Tomato", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Potato", "label": "Potato", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Beef", "label": "Beef", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Pasta", "label": "Pasta", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Shoes", "label": "Shoes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Spices", "label": "Spices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Cookies", "label": "Cookies", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Pastry", "label": "Pastry", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Bread", "label": "Bread", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Biscuits", "label": "Biscuits", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Fish", "label": "Fish", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Salt", "label": "Salt", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Saree", "label": "Saree", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Pen", "label": "Pen", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Soap", "label": "Soap", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Cooking Oil", "label": "Cooking Oil", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Chicken Breast", "label": "Chicken Breast", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Prawns", "label": "Prawns", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Cheese", "label": "Cheese", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Chips", "label": "Chips", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Belt", "label": "Belt", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Mixer Grinder", "label": "Mixer Grinder", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "Floor Cleaner", "label": "Floor Cleaner", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Juice", "to": "Shirt", "width": 1.9305106658047835}, {"from": "Shirt", "to": "Jeans", "width": 1.779903450741999}, {"from": "Shirt", "to": "Dress", "width": 1.673109243697479}, {"from": "Croissant", "to": "Educational Book", "width": 1.8907882241215577}, {"from": "Croissant", "to": "Fiction Book", "width": 1.6591666666666667}, {"from": "Educational Book", "to": "Vitamins", "width": 1.7517596782302665}, {"from": "Educational Book", "to": "Face Wash", "width": 1.6575091575091578}, {"from": "Educational Book", "to": "Cake", "width": 1.40014064697609}, {"from": "Educational Book", "to": "Dishwashing Liquid", "width": 1.3571915473755964}, {"from": "Earphones", "to": "Detergent", "width": 1.850009780907668}, {"from": "Earphones", "to": "Electric Kettle", "width": 1.6386831275720166}, {"from": "Earphones", "to": "Baby Food", "width": 1.5566133186166298}, {"from": "Earphones", "to": "Charger", "width": 1.5241688538932634}, {"from": "Detergent", "to": "Charger", "width": 1.6560385937673285}, {"from": "Vitamins", "to": "Charger", "width": 1.8443723946271422}, {"from": "Vitamins", "to": "Coffee", "width": 1.60288750536711}, {"from": "Vitamins", "to": "Soda", "width": 1.5751582278481013}, {"from": "Charger", "to": "Toilet Paper", "width": 1.425196850393701}, {"from": "Jeans", "to": "Tissue", "width": 1.4390387134661429}, {"from": "Butter", "to": "Milk", "width": 1.694847670250896}, {"from": "Milk", "to": "Orange", "width": 1.6441806451612904}, {"from": "Milk", "to": "Rice", "width": 1.5931982995748941}, {"from": "Milk", "to": "Baby Food", "width": 1.5312112796411022}, {"from": "Sugar", "to": "Onion", "width": 1.68871925360475}, {"from": "Sugar", "to": "Energy Drink", "width": 1.680168776371308}, {"from": "Sugar", "to": "Face Wash", "width": 1.5322751322751325}, {"from": "Energy Drink", "to": "Tomato", "width": 1.5973435550008914}, {"from": "Energy Drink", "to": "Potato", "width": 1.5636607225353414}, {"from": "Energy Drink", "to": "Beef", "width": 1.5193015531017147}, {"from": "Dress", "to": "Pasta", "width": 1.4872082166199818}, {"from": "Shoes", "to": "Spices", "width": 1.6603965900667161}, {"from": "Spices", "to": "Cookies", "width": 1.6214908498610712}, {"from": "Fiction Book", "to": "Pasta", "width": 1.457464052287582}, {"from": "Pastry", "to": "Bread", "width": 1.65847563515202}, {"from": "Bread", "to": "Potato", "width": 1.5818064452058196}, {"from": "Face Wash", "to": "Biscuits", "width": 1.4567404426559358}, {"from": "Face Wash", "to": "Fish", "width": 1.4567404426559358}, {"from": "Orange", "to": "Salt", "width": 1.5514285714285714}, {"from": "Electric Kettle", "to": "Saree", "width": 1.5943943943943943}, {"from": "Cookies", "to": "Pen", "width": 1.6329907849664689}, {"from": "Soap", "to": "Salt", "width": 1.6280423280423282}, {"from": "Tomato", "to": "Saree", "width": 1.6105348306052532}, {"from": "Saree", "to": "Cooking Oil", "width": 1.593083214793741}, {"from": "Chicken Breast", "to": "Biscuits", "width": 1.5687973997833156}, {"from": "Chicken Breast", "to": "Dishwashing Liquid", "width": 1.452100047192072}, {"from": "Biscuits", "to": "Prawns", "width": 1.428904638019198}, {"from": "Cheese", "to": "Chips", "width": 1.5566172957477304}, {"from": "Fish", "to": "Belt", "width": 1.5157974876284737}, {"from": "Pasta", "to": "Mixer Grinder", "width": 1.4359251746675685}, {"from": "Floor Cleaner", "to": "Toilet Paper", "width": 1.4480000000000002}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

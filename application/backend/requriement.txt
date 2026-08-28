@@ -1,0 +1,11 @@
+pandas
+numpy
+fastapi
+uvicorn 
+python-multipart
+pyjwt
+pydantic
+pillow
+matplotlib
+mlxtend
+networkx
